@@ -6,6 +6,8 @@ getwd()
 setwd("~/Desktop/R stuff/Springboard")
 
 df <- read.csv("refine_original.csv")
+df <- table_df(df)
+
 head(df)
 str(df)
 
