@@ -16,7 +16,7 @@ unique(df$company)
 df$company <- tolower(df$company)
 df$company <- gsub(".*ps$", "phillips", df$company)
 df$company <- gsub("^ak.*", "akzo", df$company)
-df$company <- gsub("^uni.*$", "unilever", df$company)
+df$company <- gsub("^uni.*", "unilever", df$company)
 
 #Separate the product code and product number into separate columns
 df <- separate(df, Product.code...number, c("product_code", "product_number"), sep = "-")
@@ -41,15 +41,16 @@ df <- unite(df, full_address, address, city, country, sep=", ")
 #Add four binary (1 or 0) columns for product category: 
 #product_smartphone, product_tv, product_laptop and product_tablet
 library(dplyr)
-df <- mutate(df, company_phillips = ifelse(df$company == "phillips", 1, 0))
-df <- mutate(df, company_akzo = ifelse(df$company == "akzo", 1, 0))
-df <- mutate(df, company_van_houten = ifelse(df$company == "van houten", 1, 0))
-df <- mutate(df, company_unilever = ifelse(df$company == "unilever", 1, 0))
-df <- mutate(df, product_smartphone = ifelse(df$product_code == "p", 1, 0))
-df <- mutate(df, product_tv = ifelse(df$product_code == "v", 1, 0))
-df <- mutate(df, product_laptop = ifelse(df$product_code == "x", 1, 0))
-df <- mutate(df, product_tablet = ifelse(df$product_code == "q", 1, 0))
+df <- df %>%
+    mutate(company_phillips = ifelse(company == "phillips", 1, 0), 
+    company_akzo = ifelse(company == "akzo", 1, 0), 
+    company_van_houten = ifelse(company == "van houten", 1, 0), 
+    company_unilever = ifelse(company == "unilever", 1, 0))
+    %>%
+    mutate(df, product_smartphone = ifelse(product_code == "p", 1, 0), 
+    product_tv = ifelse(product_code == "v", 1, 0), 
+    product_laptop = ifelse(product_code == "x", 1, 0), 
+    product_tablet = ifelse(product_code == "q", 1, 0))
 
 #save the clean file as 'refine_clean.csv'
 write.csv(df, 'refine_clean.csv')
-
