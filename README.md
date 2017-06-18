@@ -1,2 +1,1 @@
-# Springboard Foundations of Data Science workshop 
-# August 2016
+# Practice exercises in R with Titanic dataset
